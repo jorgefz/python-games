@@ -21,7 +21,7 @@ for scenario generation testing.
 
 import arcade
 import random
-from math import fabs
+from math import fabs, pi, sqrt
 
 SCREEN_X = 800
 SCREEN_Y = 800
@@ -39,8 +39,12 @@ class PlayerData():
 		self.ax = 0
 		self.ay = 0
 
+		self.ang = 0
+		self.ang_vel = 5
+
 		self.max_vel = 1
 		self.max_acc = 0.1
+		self.max_ang_vel = 5
 		self.dt = 1
 
 	def move(self):
@@ -58,6 +62,7 @@ class PlayerData():
 			self.vy = (self.vy/fabs(self.vy))*self.max_vel
 
 	def bounce(self, wall_x, wall_y):
+		# Collision with top/bottom walls
 		if (self.x > wall_x[1]):
 			self.x = wall_x[1]
 			self.vx = -fabs(self.vx)
@@ -67,6 +72,7 @@ class PlayerData():
 			self.vx = fabs(self.vx) 
 			self.ax = 0
 
+		# Collision with left/right walls
 		if (self.y > wall_y[1]):
 			self.y = wall_y[1]
 			self.vy = -fabs(self.vy)
@@ -75,13 +81,6 @@ class PlayerData():
 			self.y = wall_y[0]
 			self.vy = fabs(self.vy) 
 			self.ay = 0
-
-
-
-class Object():
-	def __init__(self):
-		self.x = SCREEN_X/4
-		self.y = SCREEN_Y/4
 
 # Main game class
 class Walker(arcade.Window):
@@ -138,9 +137,6 @@ class Walker(arcade.Window):
 			self.pd.ay = 0
 		elif (key == arcade.key.A or key == arcade.key.D):
 			self.pd.ax = 0
-		
-
-
 
 
 def main():

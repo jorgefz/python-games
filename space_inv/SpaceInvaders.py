@@ -134,16 +134,17 @@ class Invader:
 		self.color = RED
 
 	def draw_self(self, screen):
-
 		if self.isdead == False:
 			screen.blit(INV, (self.x, self.y))
 			self.step_time += 100
 
 	def step_forward(self):
-
 		if self.isdead==False and self.step_time==self.gap_time:
 			self.step_time = 0
 			self.y += self.speed
+
+	def randomize_gap(self):
+		self.gap_time = int(random.uniform(500, 2000))
 
 
 
